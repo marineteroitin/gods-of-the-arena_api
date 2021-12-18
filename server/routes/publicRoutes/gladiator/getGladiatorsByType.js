@@ -15,7 +15,7 @@ module.exports = async (request, response) => {
         } else {
 
             /* Get gladiator's */
-            const gladiatorType = await GladiatorController.getAllGladiators(id_gladiatorType);
+            const gladiatorType = await GladiatorController.getAllGladiatorsByType(id_gladiatorType);
 
             /* Check if it is empty */
             if (gladiatorType.length < 1) {

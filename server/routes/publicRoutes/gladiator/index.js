@@ -5,6 +5,6 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/gladiatorType/:id', require('./getGladiators'));
+router.get('/gladiatorType/:id', require('./getGladiatorsByType'));
 
 module.exports = router;

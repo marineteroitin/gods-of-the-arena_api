@@ -18,6 +18,20 @@ const createProposition = async (gladiatorType1, gladiatorType2, animal) => {
     }
 }
 
+/*
+    Get all propositions
+ */
+
+const getAllPropositions = async () => {
+    try {
+        const {rows} = await db.query('SELECT * FROM "proposition"')
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
-    createProposition
+    createProposition,
+    getAllPropositions
 }

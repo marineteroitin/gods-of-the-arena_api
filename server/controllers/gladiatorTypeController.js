@@ -6,7 +6,7 @@ const db = require('../config/db');
 
 
 /*
-    Get all different types of gladiators from Animal
+    Get all different types of gladiators from Animal.
  */
 const getAllGladiatorType = async () => {
     try {

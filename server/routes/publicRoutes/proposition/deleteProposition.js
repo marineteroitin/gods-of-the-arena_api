@@ -8,7 +8,7 @@ module.exports = async (request,response) => {
     try {
         const  id_proposition  = request.params.id;
 
-        /* Check input */
+        /* Check params */
         if(!id_proposition){
             return response.status(400).json({ error: "You need to provide the id of the proposition." });
         } else {

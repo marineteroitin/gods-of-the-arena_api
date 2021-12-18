@@ -18,7 +18,7 @@ module.exports = async (request, response) => {
 
     } catch (err) {
         return response.status(500).json({
-            error: "Impossible to get the different types of gladiators."
+            error: "Impossible to get the different types of gladiators.", err
         })
     }
 }

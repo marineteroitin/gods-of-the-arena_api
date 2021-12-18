@@ -17,7 +17,8 @@ const getAllGladiatorType = async () => {
         throw error;
     }
 }
-    module.exports = {
+
+module.exports = {
         getAllGladiatorType
-    }
+}
 

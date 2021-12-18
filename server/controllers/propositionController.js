@@ -31,7 +31,23 @@ const getAllPropositions = async () => {
     }
 }
 
+/*
+    delete a proposition according to a given id
+ */
+
+
+const deleteProposition = async (id_proposition) => {
+    try{
+        const {rows} = await db.query('DELETE FROM "proposition" WHERE "id_proposition" = $1 RETURNING *', [id_proposition])
+        return rows[0];
+
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createProposition,
-    getAllPropositions
+    getAllPropositions,
+    deleteProposition
 }

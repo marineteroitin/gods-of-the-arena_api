@@ -1,5 +1,5 @@
 /*
-    Gladiator's controller handle all action with gladiator database object
+    Gladiator's controller handle all actions with gladiator database object
  */
 
 const db = require('../config/db');
@@ -17,6 +17,18 @@ const getAllGladiatorsByType = async (id_gladiatorType) => {
     }
 }
 
+const getGladiatorById = async (id_gladiator) => {
+    try {
+        const {rows} = await db.query('SELECT * FROM "gladiator" WHERE "id_gladiator" = $1', [id_gladiator])
+        return rows[0];
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 module.exports = {
-    getAllGladiatorsByType
+    getAllGladiatorsByType,
+    getGladiatorById
 }

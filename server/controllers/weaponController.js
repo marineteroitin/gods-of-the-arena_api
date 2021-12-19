@@ -1,5 +1,5 @@
 /*
-    Weapon's controller handle all action with weapon database object
+    Weapon's controller handle all actions with weapon database object
  */
 
 const db = require('../config/db');
@@ -18,6 +18,17 @@ const getWeaponsByGladiatorType = async (id_gladiatorType) => {
     }
 }
 
+const getIdWeaponsByGladiatorType = async (id_gladiatorType) => {
+    try {
+        const {rows} = await db.query('SELECT id_weapon FROM "weapon" WHERE "id_gladiatorType" = $1', [id_gladiatorType])
+        return rows;
+
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
-    getWeaponsByGladiatorType
+    getWeaponsByGladiatorType,
+    getIdWeaponsByGladiatorType
 }

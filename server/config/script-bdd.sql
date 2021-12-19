@@ -35,14 +35,14 @@ CREATE TABLE "fight" (
 );
 
 CREATE TABLE "participant" (
-    "id_gladiatorType" integer NOT NULL,
-    CONSTRAINT "fk_type_participant" FOREIGN KEY ("id_gladiatorType") REFERENCES "gladiatorType"("id_gladiatorType"),
+    "id_gladiator" integer NOT NULL,
+    CONSTRAINT "fk_gladiator_participant" FOREIGN KEY ("id_gladiator") REFERENCES "gladiator"("id_gladiator"),
     "id_fight" integer NOT NULL,
     CONSTRAINT "fk_fight_participant" FOREIGN KEY ("id_fight") REFERENCES "fight"("id_fight"),
-    "id_weapon" integer NOT NULL,
+    "id_weapon" integer,
     CONSTRAINT "fk_weapon_participant" FOREIGN KEY ("id_weapon") REFERENCES "weapon"("id_weapon"),
 
-    PRIMARY KEY("id_gladiatorType", "id_fight")
+    PRIMARY KEY("id_gladiator", "id_fight")
 );
 
 

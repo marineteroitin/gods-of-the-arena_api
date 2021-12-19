@@ -1,5 +1,5 @@
 /*
-    Proposition controller handle all action with proposition database object
+    Proposition controller handle all actions with proposition database object
  */
 
 const db = require('../config/db');
@@ -10,7 +10,7 @@ const db = require('../config/db');
 
 const createProposition = async (gladiatorType1, gladiatorType2, animal) => {
     try {
-        const { rows } = await db.query('INSERT INTO "proposition" ("gladiatorType1", "gladiatorType2", "animal") VALUES ($1, $2, $3) RETURNING *', [gladiatorType1, gladiatorType2, animal])
+        const {rows} = await db.query('INSERT INTO "proposition" ("gladiatorType1", "gladiatorType2", "animal") VALUES ($1, $2, $3) RETURNING *', [gladiatorType1, gladiatorType2, animal])
         return rows[0];
 
     } catch (error) {
@@ -32,12 +32,24 @@ const getAllPropositions = async () => {
 }
 
 /*
+    Get proposition by id
+ */
+
+const getPropositionById = async (id_proposition) => {
+    try {
+        const {rows} = await db.query('SELECT * FROM "proposition" WHERE "id_proposition" = $1', [id_proposition])
+        return rows[0];
+    } catch (error) {
+        throw error;
+    }
+}
+
+/*
     delete a proposition according to a given id
  */
 
-
 const deleteProposition = async (id_proposition) => {
-    try{
+    try {
         const {rows} = await db.query('DELETE FROM "proposition" WHERE "id_proposition" = $1 RETURNING *', [id_proposition])
         return rows[0];
 
@@ -49,5 +61,6 @@ const deleteProposition = async (id_proposition) => {
 module.exports = {
     createProposition,
     getAllPropositions,
+    getPropositionById,
     deleteProposition
 }

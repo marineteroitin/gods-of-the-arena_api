@@ -1,5 +1,5 @@
 /*
-    Participant controller handle all actions with participant database object
+    Participant service handle all actions with participant database object
  */
 
 const db = require('../config/db');

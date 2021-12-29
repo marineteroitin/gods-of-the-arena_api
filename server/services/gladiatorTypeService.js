@@ -1,5 +1,5 @@
 /*
-    Gladiator's type controller handle all actions with gladiatorType database object
+    Gladiator's type service handle all actions with gladiatorType database object
  */
 
 const db = require('../config/db');
@@ -18,7 +18,9 @@ const getAllGladiatorType = async () => {
     }
 }
 
+
+
 module.exports = {
-        getAllGladiatorType
+    getAllGladiatorType,
 }
 

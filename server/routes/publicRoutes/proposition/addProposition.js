@@ -1,31 +1,24 @@
 /*
-    This route allow to create a propositon with two type of gladiator and an optional animal
+    This route allow to create a propositon with two type of gladiator and an optional animal.
+    - You have to give the id of two types of gladiators (gladiatorType1, gladiatorType2).
+    - Animal is a boolean, false by default.
  */
 
-const PropositionController = require('../../../controllers/propositionController');
+const PropositionService = require('../../../services/propositionService');
 
 
 module.exports = async (request, response) => {
     try {
 
-        let { gladiatorType1, gladiatorType2, animal } = request.body;
+        let {gladiatorType1, gladiatorType2, animal} = request.body;
 
-        /* Check inputs */
-        if(!animal){
-            animal = false //default value;
-        }
+        /* Create the proposition */
+        const proposition = await PropositionService.createProposition(gladiatorType1, gladiatorType2, animal)
+        return response.status(201).json({proposition})
 
-        if(!gladiatorType1 || !gladiatorType2){
-            return response.status(400).json({ error: "You have to give 2 types of gladiators" });
-        } else {
-            /*
-            Create the proposition
-             */
-            const proposition = await PropositionController.createProposition(gladiatorType1, gladiatorType2, animal)
-            return response.status(201).json({proposition})
-        }
 
     } catch (err) {
+        console.error(err);
         return response.status(500).json({
             error: "Impossible to create this proposition.", err
         })

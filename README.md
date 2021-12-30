@@ -5,6 +5,8 @@ This project is the backend of the technical for Pupl.
 
 You must have node.js and PostgreSQL installed.
 
+Run the `npm i` command to install all dependencies.
+
 ### Database configuration
 Create a postgreSql database called for example 'gods_of_the_arena'.
 

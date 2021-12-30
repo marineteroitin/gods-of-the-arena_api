@@ -68,7 +68,11 @@ INSERT INTO "gladiator" ("name_gladiator", "customization", "id_gladiatorType")
             ('Flamma', 'false', '4'),
             ('Mouton Noir', 'false', '5'),
             ('Tigre', 'false', '5'),
-            ('Lion', 'false', '5');
+            ('Lion', 'false', '5'),
+            ('Ours', 'false', '5'),
+            ('Chacal', 'false', '5'),
+            ('Lynx', 'false', '5'),
+            ('Loup', 'false', '5');
 
 INSERT INTO "weapon" ("name_weapon", "id_gladiatorType")
     VALUES ('épée à une main', '1'),

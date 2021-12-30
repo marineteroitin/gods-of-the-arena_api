@@ -110,7 +110,7 @@ const animalConditions = async (animals, proposition) => {
         throw ("You can't choose more than 5 animals.");
     }
 
-    if(animals.length !== 0){
+    if (animals.length !== 0) {
         /* check it is a list of animals */
         let notAnimals = await GladiatorService.getNotAnimalsInList(animals);
 
@@ -130,45 +130,52 @@ const getTodaysFights = async () => {
     try {
         const {rows} = await db.query('SELECT fight.id_fight, gladiator.name_gladiator, weapon.name_weapon, "gladiatorType"."name_gladiatorType" FROM "fight" INNER JOIN "participant" ON participant.id_fight = fight.id_fight INNER JOIN "gladiator" ON gladiator.id_gladiator = participant.id_gladiator LEFT JOIN "weapon" ON participant.id_weapon = weapon.id_weapon INNER JOIN "gladiatorType" ON "gladiator"."id_gladiatorType" = "gladiatorType"."id_gladiatorType" WHERE DATE("date_fight") = NOW()::date ORDER BY fight.date_fight ASC')
 
-        console.log(rows);
-
-        //  const fights = [];
-        /* GOAL
-
-         fights = {
-                     {id_fight
-                     gladiators: [
-                                   {
-                                  name_gladiator,
-                                  name_weapon,
-                                   name_gladiatorType
-                                  },
-                                  {
-                                  name_gladiator,
-                                  name_weapon,
-                                   name_gladiatorType
-                                  }
-                                ]
-                     },
-                     {id_fight
-                     gladiators: [
-                                   {
-                                  name_gladiator,
-                                  name_weapon,
-                                   name_gladiatorType
-                                  },
-                                  {
-                                  name_gladiator,
-                                  name_weapon,
-                                   name_gladiatorType
-                                  }
-                                ]
-                     },
+        /* if there are fights, I group the participants by fight */
+        if (rows.length > 1) {
+            let init = true;
+            let fights = [];
+            let currentFight = -1;
+            let participants = [];
+            rows.map((row, index) => {
+                if (init) { //init
+                    currentFight = row.id_fight;
+                    init = false
                 }
-          */
 
-        // const fight = []
-        //return fights;
+                if (row.id_fight !== currentFight) { // next fight
+
+                    // add previous fight to result
+                    fights.push({
+                        "id_fight": currentFight,
+                        "participants": participants
+                    })
+
+                    //init variable
+                    participants = [];
+
+                    //next fight
+                    currentFight = row.id_fight;
+                }
+
+                participants.push(
+                    {
+                        "name_gladiator": row.name_gladiator,
+                        "name_weapon": row.name_weapon,
+                        "name_gladiatorType": row.name_gladiatorType
+                    }
+                )
+
+                if(index === rows.length -1){ // end case
+                    fights.push({
+                        "id_fight": currentFight,
+                        "participants": participants
+                    })
+                }
+
+
+            })
+            return fights;
+        }
 
         return rows;
     } catch (error) {

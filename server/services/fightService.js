@@ -52,12 +52,29 @@ const gladiatorConditions = async (participant1, participant2, proposition) => {
     const gladiator2 = await GladiatorService.getGladiatorById(participant2.id_gladiator);
 
     /* participants must correspond to the requested types */
-    if (!(proposition.gladiatorType1 === gladiator1.id_gladiatorType
-            && proposition.gladiatorType2 === gladiator2.id_gladiatorType)
-        && !(proposition.gladiatorType1 === gladiator2.id_gladiatorType
-            && proposition.gladiatorType2 === gladiator1.id_gladiatorType)) {
+    let requestedType1 = gladiator1.id_gladiatorType;
+    let requestedType2 = gladiator2.id_gladiatorType;
+
+    let givenType1 = proposition.gladiatorType1;
+    let givenType2 = proposition.gladiatorType2;
+
+
+    /*
+    meilleure solution, regarder que les givenType  appartiennent à un tableau qui contient les requestedType
+    et que les givenType soient !=
+     */
+    let participants_Match_requestedGladiatorTypes = (givenType1 === requestedType1
+        && givenType2 === requestedType2);
+
+    let case2 = (givenType1 === requestedType2
+        && givenType2 === requestedType1);
+
+    if (!participants_Match_requestedGladiatorTypes
+        && !case2) {
         throw ("Participants must correspond to the requested types in the proposition");
     }
+
+
 
     /* check the weapon conditions */
     try {

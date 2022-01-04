@@ -21,18 +21,9 @@ module.exports = async (request, response) => {
             animals = []; // case there is no animals
         }
 
-        /* creation of the fight */
-        const fight = await FightService.createFight(id_proposition, gladiator1, gladiator2, animals);
+       const fight = await FightService.createFight(id_proposition, gladiator1, gladiator2, animals);
 
-        /* creation of the participants */
-        const participants = [];
-
-        participants.push(await ParticipantService.createParticipant(fight.id_fight, gladiator1.id_gladiator, gladiator1.id_weapon));
-        participants.push(await ParticipantService.createParticipant(fight.id_fight, gladiator2.id_gladiator, gladiator2.id_weapon));
-
-        for (let animal of animals) {
-            participants.push(await ParticipantService.createParticipant(fight.id_fight, animal, null));
-        }
+       let participants = await createParticipants(fight, gladiator1, gladiator2, animals);
 
         /* Delete the proposition.
         I guess we don't keep the history of all the proposals to avoid overloading the DB
@@ -47,4 +38,18 @@ module.exports = async (request, response) => {
         console.error(err);
         return response.status(400).json({ status: 400, message: err });
     }
+}
+
+async function createParticipants(fight, gladiator1, gladiator2, animals) {
+    const participants = [];
+
+    participants.push(await ParticipantService.createParticipant(fight.id_fight, gladiator1.id_gladiator, gladiator1.id_weapon));
+    participants.push(await ParticipantService.createParticipant(fight.id_fight, gladiator2.id_gladiator, gladiator2.id_weapon));
+
+
+    for (let animal of animals) {
+        participants.push(await ParticipantService.createParticipant(fight.id_fight, animal, null));
+    }
+
+    return participants;
 }
